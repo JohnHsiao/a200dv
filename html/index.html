@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="JohnHsiao">
+<title>DashBoard</title>
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/bootstrap-theme.css" rel="stylesheet">
+<link href="css/font-awesome.min.css" rel="stylesheet" />
+<link href="css/style.css" rel="stylesheet">
+<link href="css/style-responsive.css" rel="stylesheet" />
+<link href="css/main.css" rel="stylesheet" />
+</head>
+
+<body>
+	<section id="container">
+
+		<header class="header dark-bg">
+			<div class="toggle-nav" style="margin: 8px 0px 5px 0px;">
+				<div style="white-space:nowrap" class="icon-reorder tooltips" data-original-title="下載資料" data-placement="bottom">
+					<img src="img/logo.png" width="48" style="margin: 0px 0px 6px 0px;"/> <span class="med">
+					台灣電力公司</span><span class="lite">馬鞍山發電廠</span-->
+					
+				</div>
+
+			</div>
+		</header>
+
+
+
+		<section class="wrapper">
+
+
+			<div class="dash-unit">
+				<div class="graph-info">
+					<div style="width: 470px; height: 160px;">						
+						<div id="dater"></div>	
+						<div id="timer"></div>
+						<div id="realer"></div>
+						<div id="counter"></div>						
+					</div>
+				</div>
+			</div>
+
+			<div class="dash-unit">
+				<div class="graph-info">
+					<div style="width: 100%; height: 100%;">
+						<canvas id="myChart" width="480" height="460"></canvas>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="dash-unit">
+				<div class="graph-info">
+					<div style="width: 470px; height: 60px;">						
+						<span id="status"></span><a id="save" href="all_data.json" download></a>	
+					</div>
+				</div>
+			</div>
+
+
+			<!--div class="panel panel-default">
+						<div class="panel-heading">
+							<h2><i class="fa fa-map-marker red"></i><strong>Data</strong></h2>
+							<div class="panel-actions">
+								<a href="index.html#" class="btn-setting"><i class="fa fa-rotate-right"></i></a> 
+								<a href="index.html#" class="btn-minimize"><i class="fa fa-chevron-up"></i></a>
+								<a href="index.html#" class="btn-close"><i class="fa fa-times"></i></a>
+							</div>
+						</div>
+						<div class="panel-body">
+							<div class="widget-foot">
+							
+							</div>
+						</div>
+
+					</div-->
+
+
+		</section>
+
+
+
+	</section>
+
+	<script src="js/jquery.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/Chart.min.js"></script>
+	<script src="js/scripts.js"></script>	
+
+
+</body>
+</html>
