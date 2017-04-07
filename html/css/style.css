@@ -13,15 +13,18 @@
 	  src:url('elektra.ttf')format('truetype');
 }
 
+
+
 #dater {
 	/*zoom: 0.5;*/
-	float:right;
+	
 	font-size:36px;
 	font-family:elektra;
 }
 
 #timer {
 	/*zoom: 0.5;*/	
+	float:right;
 	font-size:36px;
 	font-family:elektra;	 
 }
@@ -31,12 +34,14 @@
 	
 }
 
+
 #realer{
-	float:left;
-	text-align:left;
-	font-size:40px;
-	font-family:digital;  	
-	
+	font-size:18px;
+	font-family:digital;
+	position:relative;
+	float:right;
+	right:5px;
+	bottom:100px;
 }
 
 #counter{	
@@ -4900,11 +4905,11 @@ ul.ft-link li a i {
 
 /*profile-widget image bg*/
 
-.profile-widget-img{
+/*.profile-widget-img{
 
     background: url('../img/backgrounds/bg-11-small.jpg') no-repeat !important;    
 
-}
+}*/
 
 .profile-nav .profile-widget-img .bg-layer {
 
@@ -6532,8 +6537,8 @@ ul.inbox-pagination li {
 
   background:#e9e3dd;
 
-  background-image: url('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQTdWeWNteABnbzguiXSBxmfc8Z8nh_HHoWoK35QL81x4HnpVmgvQ');
-
+  /*background-image: url('https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQTdWeWNteABnbzguiXSBxmfc8Z8nh_HHoWoK35QL81x4HnpVmgvQ');
+*/
   background-repeat: no-repeat;
 
   background-size: 200% 200%;

@@ -1,33 +1,52 @@
-var clock, counter;
+var option, dataSetA, labels;
 $(document).ready(function() {
 	var data = {
 		labels : [ "", "", "", "", "", "", "", "", "", "", "", "", "","", "", "", "", "", "", "", "", "", "", "", "", "", "","", "", "" ],
+		
 		datasets : [{
 			fillColor : "rgba(255,255,255,0.1)",
 			strokeColor : "rgba(220,220,220,1)",
 			pointColor : "rgba(220,220,220,1)",
 			pointStrokeColor : "#fff",
 			data : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0 ]
-		},]
+		},/*{
+			fillColor : "rgba(255,255,255,0.1)",
+			strokeColor : "rgba(220,220,220,1)",
+			pointColor : "rgba(220,220,220,1)",
+			pointStrokeColor : "#fff",
+			data : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0 ]
+		}*/]
 	}
 	
 	// 置入資料序列
 	var updateData = function(oldData) {
-		var labels = oldData["labels"];
-		var dataSetA = oldData["datasets"][0]["data"];
+		labels = oldData["labels"];
+		
+		dataSetA = oldData["datasets"][0]["data"];
+		//dataSetB = oldData["datasets"][1]["data"];
+		
 		labels.shift();
 		labels.push("");
 		//var newDataA = dataSetA[9]+ (20 - Math.floor(Math.random() * (41)));
+		
 		dataSetA.push(read());
+		//dataSetB.push(read()-1);
+		
+		
 		dataSetA.shift();
+		//dataSetB.shift();
 	};
 	
-	var option = {
+	option = {
 		pointDot : false,
 		animation : false,
+		scaleOverride: true,
+		scaleSteps: 25,
+	    scaleStepWidth: 10,
+	    scaleStartValue: 0,
 		scaleGridLineColor : "rgba(255,255,255,.1)",
 		datasetStrokeWidth : 0.5,
-		scaleStartValue : 0
+		
 	}
 	
 	var ctx = document.getElementById("myChart").getContext("2d");
@@ -40,16 +59,18 @@ $(document).ready(function() {
 	setInterval(function() {
 		updateData(data);
 		myNewChart.Line(data, option);
-	}, 1000);
+	}, 500);
 
 });
 
 var d, s;
-function getDate(s) {
+function getDate() {
 	d = new Date()
 	$("#counter").html(s);
 	$("#dater").html(formatDate(d, "yyyy/MM/dd"));
 	$("#timer").html(formatDate(d, "HH:mm:ss"));
+	option.scaleStepWidth=Math.ceil(s/25);
+	option.scaleStartValue=Math.ceil(s/3);
 }
 
 function formatDate(date, format) {
@@ -108,7 +129,7 @@ function read() {
 		//error : function() {}
 	});
 	s = pow(s);
-	getDate(s);
+	getDate();
 	return s;
 }
 
@@ -123,6 +144,10 @@ function pow(n) {
 	n = n.toString().slice(0, -2);
 	n += "00";
 	$("#realer").html(n);
+	//$(".dial").knob();
+	$('.dial').val(((n-4000)/20000)*100).trigger('change');
+	
+	
 	if (n >= 4000 && n <= 8000) {
 		n = Math.pow(10, 1 + ((n - 4000) * 0.00025));
 	}
@@ -135,5 +160,7 @@ function pow(n) {
 	if (n > 16000 && n <= 21000) {
 		n = Math.pow(10, 4 + ((n - 16000) * 0.00025));
 	}
+	
+	
 	return Math.round(n);
 }

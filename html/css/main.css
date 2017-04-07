@@ -163,7 +163,7 @@ h5 {
 	margin-bottom: 30px;
 	padding-bottom: 4px;
 	border: 1px solid #383737;
-	background-image:url('../img/sep-half.png');
+	/*background-image:url('../img/sep-half.png');*/
 	background-color: #3d3d3d;
 	color:white;
 	height:130px;
@@ -279,7 +279,7 @@ h5 {
 }
 
 .modal-header {
-	background-image:url('../img/sep-half.png');
+	/*background-image:url('../img/sep-half.png');*/
 	background-color: #4f4f4f;
 	color:#fff;
 }
@@ -383,11 +383,11 @@ digiclock {
 }
 .framemail .window .mail li {
     background-color:#3d3d3d;
-    background-image: -webkit-linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,0%,.05));
+    /*background-image: -webkit-linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,0%,.05));
     background-image:    -moz-linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,0%,.05));
     background-image:     -ms-linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,0%,.05));
     background-image:      -o-linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,0%,.05));
-    background-image:         linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,0%,.05));
+    background-image:         linear-gradient(hsla(0,0%,100%,.05), hsla(0,0%,0%,.05));*/
     border-top: 1px solid #888;
     position: relative;
     margin-left:-18px;

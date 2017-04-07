@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import gnu.io.CommPort;
@@ -16,8 +17,12 @@ public class Main {
 	
 	static byte[] buffer = new byte[7];
 	static int len = -1;
+	static int sleep=5000;
+	static File dir = new File("/media/pi/A200DV");
 	static WriteFile w=new WriteFile();
-	static String file="data.json";	
+	static String tmpFile="data.json";
+	static String savFile="data.csv";
+	static String ln=System.getProperty("line.separator");
 	static String path="/home/pi/Public/html/";	
 	static String driver="/dev/ttyUSB0";
 	static boolean usbSaved=false;
@@ -73,7 +78,7 @@ public class Main {
 			while(true){
 				try {
 					this.in.read(buffer);					
-					Thread.sleep(1000);
+					Thread.sleep(sleep);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -98,7 +103,7 @@ public class Main {
                     	out.write(com[i]);
                     }
                 	writeTmp(String.valueOf(converter(buffer)));//寫入顯示用文字檔                                      
-                    Thread.sleep(1000);//發送命令間隔
+                    Thread.sleep(sleep);//發送命令間隔
                     
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -108,17 +113,17 @@ public class Main {
 	}
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("java.library.path="+System.getProperty("java.library.path"));
+		//System.out.println("java.library.path="+System.getProperty("java.library.path"));
 		try{
 			//w.mkDir(path);
 			(new Main()).connect(driver);	
 		}catch(Exception e){
-			path="C:\\dev\\template\\NiceAdmin\\";
+			path="C:\\workspace\\eclipse-jee-neon-1a\\a200dv\\html\\";
 			driver="COM4";
 			//w.mkDir(path);
 			(new Main()).connect(driver);	
 		}		
-		w.createNewFile(path+file);		
+		w.createNewFile(path+tmpFile);		
 		
 	}
 	
@@ -130,16 +135,17 @@ public class Main {
 	 * @return
 	 */
 	private static int converter(byte b[]){	
+		/*測試時顯示
 		for(int i=0; i<buffer.length; i++){							
 			System.out.print("["+buffer[i]+"] ");						
-		}
+		}*/
 		
-		String s;
-		if(buffer[0]==1){
+		String s=String.valueOf(toHex(b[3]))+String.valueOf(toHex(b[4]));;
+		/*if(buffer[0]==1){
 			s=String.valueOf(toHex(b[3]))+String.valueOf(toHex(b[4]));
 		}else{
 			s=String.valueOf(toHex(b[2]))+String.valueOf(toHex(b[3]));
-		}
+		}*/
 		
 		System.out.println();
 		int c=Integer.parseInt(s, 16);
@@ -180,8 +186,9 @@ public class Main {
 	 * 記錄文字檔
 	 */
 	private static void writeTmp(String val){
-		w.writeText_UTF8("{\"stat\":\""+getStat()+"\",\"num\":"+val+"}", path+file);	
-		w.writeText_UTF8_Apend("{\"v\":"+val+",\"d\":"+new Date().getTime()+"},", path+"all_"+file+"");
+		w.writeText_UTF8("{\"stat\":\""+getStat()+"\",\"num\":"+val+"}", path+tmpFile);	
+		//w.writeText_UTF8_Apend("{\"v\":"+val+",\"d\":"+new Date().getTime()+"},", path+savFile+"");
+		w.writeText_UTF8_Apend(val+","+new Date().getTime()+ln, path+savFile+"");
 		//System.out.println(getStat());
 	}
 	
@@ -191,8 +198,6 @@ public class Main {
 	 * @return
 	 */
 	private static boolean getStat(){		
-		
-		File dir = new File("/media/pi/A200DV");
 		File[] fList;
 		if(dir.exists()){
 			fList= dir.listFiles();
@@ -220,18 +225,19 @@ public class Main {
 	
 	 public static void writeUsb (boolean d) {
 		 	String cmd, lmd[];
+		 	SimpleDateFormat sf=new SimpleDateFormat("yyyy/MM/dd HH:mm");
 	        try {            
-	            Runtime rt = Runtime.getRuntime ();
-	            Process proc;
+	            //Runtime rt = Runtime.getRuntime ();
+	            //Process proc;
 	            if(d){
 	            	//windows
-	            	cmd=new String("copy C:\\dev\\template\\NiceAdmin\\all_data.json F:\\all_data_"+new Date().getTime()+".json /Y");				
+	            	cmd=new String("copy "+path+savFile+" F:\\"+sf.format(new Date().getTime())+".csv /Y");				
 	            	runexec("cmd /c"+cmd);//window系統下的轉換
 	            
 	            }else{
 	            	//proc = rt.exec ("cp /home/pi/Public/html/all_data.json /media/pi/A200DV/all_data_"+new Date().getTime()+".json");
 	            	//linux
-					lmd=new String[]{"cp","/home/pi/Public/html/all_data.json","/media/pi/A200DV/all_data_"+new Date().getTime()+".json"};
+					lmd=new String[]{"cp","/home/pi/Public/html/"+savFile,"/media/pi/A200DV/"+sf.format(new Date().getTime())+".csv"};
 					Runtime.getRuntime().exec(lmd);  
 	            }	            
 	            
