@@ -120,11 +120,15 @@ function read() {
 				$("#status").html("<a href='all_data.json' download>儲存裝置已自動儲存</a>");
 				if(!finish)
 				startDownload();
-			}else{
+			}
+			if(d.stat=="false"){
 				finish=false;
 				$("#status").html("儲存裝置尚未連結");
 			}
-			
+			if(d.stat=="max"){
+				finish=false;
+				$("#status").html("<font color='red'>10000小時未儲存</font>");
+			}
 		},
 		//error : function() {}
 	});
