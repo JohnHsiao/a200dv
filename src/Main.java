@@ -147,9 +147,9 @@ public class Main {
 			s=String.valueOf(toHex(b[2]))+String.valueOf(toHex(b[3]));
 		}*/
 		
-		System.out.println();
+		//System.out.println();
 		int c=Integer.parseInt(s, 16);
-		System.out.println(c+"↑");
+		//System.out.println(c+"↑");
 		
 		
 		return c;

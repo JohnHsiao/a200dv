@@ -31,25 +31,30 @@
 
 #status{
 	font-size:48px;
+}
+
+#mark{
+	font-size:18px;
 	
+	position:relative;
+	float:right;
+	right:0px;
+	bottom:-70px;
 }
 
 
 #realer{
 	font-size:18px;
 	font-family:digital;
-	position:relative;
-	float:right;
-	right:5px;
-	bottom:100px;
+	position:relative;	
+	left:0px;
+	top:-210px;
 }
 
-#counter{	
-	
+#counter{
 	text-align:right;
 	font-size:136px;
-	font-family:digital;  	
-	
+	font-family:digital;
 	position:relative;
 	top:-48px;
 }
