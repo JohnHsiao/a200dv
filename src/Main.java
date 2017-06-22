@@ -23,8 +23,8 @@ public class Main {
 	static boolean usbSaved=false;
 	static Thread t1, t2;
 	static File savFile;
-	static long max=1073741824;
-	//static long max=300;
+	//static long max=1073741824*4;
+	//static int max=4096;
 	/**
 	 * 裝置連線
 	 * @param portName
@@ -116,7 +116,7 @@ public class Main {
 			(new Main()).connect(driver);	
 		}catch(Exception e){
 			path="C:\\workspace\\eclipse-jee-neon-1a\\a200dv\\html\\";
-			driver="COM4";
+			driver="COM3";
 			//w.mkDir(path);
 			(new Main()).connect(driver);	
 		}		
@@ -132,9 +132,9 @@ public class Main {
 	 * @return
 	 */
 	private static int converter(byte b[]){	
-		/*for(int i=0; i<buffer.length; i++){							
+		for(int i=0; i<buffer.length; i++){							
 			System.out.print("["+buffer[i]+"] ");						
-		}*/
+		}
 		
 		String s;
 		if(buffer[0]==1){
@@ -143,9 +143,9 @@ public class Main {
 			s=String.valueOf(toHex(b[2]))+String.valueOf(toHex(b[3]));
 		}
 		
-		//System.out.println();
+		System.out.println();
 		int c=Integer.parseInt(s, 16);
-		//System.out.println(c+"↑");
+		System.out.println(c+"↑");
 		
 		
 		return c;
@@ -181,16 +181,20 @@ public class Main {
 	/**
 	 * 記錄文字檔
 	 */
-	private static void writeTmp(String val){
+	private static void writeTmp(String val){		
+		savFile=new File(path+"all_"+file);		
+		//long tmp=(savFile.length()/1024)/1024;
+		System.out.println("file size: "+savFile.length());
+		w.writeText_UTF8("{\"u\":\""+savFile.length()+"\",\"s\":\""+getStat()+"\",\"n\":\""+val+"\"}", path+file);
 		
-		savFile=new File(path+"all_"+file);
-		//System.out.println(x);
-		if(savFile.length()<max){
-			w.writeText_UTF8("{\"stat\":\""+getStat()+"\",\"num\":"+val+"}", path+file);	
+		/*if(savFile.length()<max){
+				
 		}else{
 			getStat();
 			w.writeText_UTF8("{\"stat\":\"max\",\"num\":"+val+"}", path+file);
-		}		
+		}*/
+		
+		
 		w.writeText_UTF8_Apend("{\"v\":"+val+",\"d\":"+new Date().getTime()+"},", path+"all_"+file);
 		
 		
@@ -237,7 +241,7 @@ public class Main {
 	            //Process proc;
 	            if(d){
 	            	//windows
-	            	cmd=new String("copy C:\\dev\\template\\NiceAdmin\\all_data.json F:\\all_data_"+new Date().getTime()+".json /Y");				
+	            	cmd=new String("copy C:\\workspace\\eclipse-jee-neon-1a\\a200dv\\html\\all_data.json F:\\all_data_"+new Date().getTime()+".json /Y");				
 	            	runexec("cmd /c"+cmd);//window系統下的轉換
 	            
 	            }else{
@@ -272,9 +276,9 @@ public class Main {
 			 
 			BufferedReader br = new BufferedReader(isr); String line = null;
 			 
-			/*while ((line = br.readLine()) != null) { 
+			while ((line = br.readLine()) != null) { 
 				System.out.println(line); 
-			}*/
+			}
 			is.close(); isr.close(); br.close(); 
 		} catch (IOException e) { 
 			 //TODO Auto-generated catch block e.printStackTrace(); }

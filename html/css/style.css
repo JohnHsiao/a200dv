@@ -13,13 +13,21 @@
 	  src:url('elektra.ttf')format('truetype');
 }
 
-
-
 #dater {
 	/*zoom: 0.5;*/
 	
 	font-size:36px;
 	font-family:elektra;
+}
+#alertIcon{
+	position: absolute;
+  	top: 132px;
+  	left: 12px;
+}
+#alertLine{
+	position: absolute;
+  	top: 130px;
+  	left: 27px;
 }
 
 #timer {
@@ -42,10 +50,9 @@
 	bottom:-70px;
 }
 
-
 #realer{
 	font-size:18px;
-	font-family:digital;
+	/*font-family:elektra;*/
 	position:relative;	
 	left:0px;
 	top:-210px;

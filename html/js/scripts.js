@@ -1,11 +1,19 @@
 var option, dataSetA, labels;
+$("#warnArea").click(function() {
+	$("#warn").slider("enable");	
+	//$(".slider-selection").css('background', 'red');
+	//$(".slider-handle").css('background', 'red');
+	//$(".in-selection").css('background', 'red');	
+	setTimeout("$('#warn').slider('disable');", 5000);	
+});
+
 $(document).ready(function() {
 	var data = {
 		labels : [ "", "", "", "", "", "", "", "", "", "", "", "", "","", "", "", "", "", "", "", "", "", "", "", "", "", "","", "", "" ],
 		
 		datasets : [{
-			fillColor : "rgba(255,255,255,0.1)",
-			strokeColor : "rgba(220,220,220,1)",
+			fillColor : "rgba(51,204,51,0.1)",
+			strokeColor : "rgba(51,204,51,1)",
 			pointColor : "rgba(220,220,220,1)",
 			pointStrokeColor : "#fff",
 			data : [ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0 ]
@@ -21,15 +29,26 @@ $(document).ready(function() {
 	// 置入資料序列
 	var updateData = function(oldData) {
 		labels = oldData["labels"];
-		
+		pushdata=read();
 		dataSetA = oldData["datasets"][0]["data"];
 		//dataSetB = oldData["datasets"][1]["data"];
+		
+		if(pushdata>$("#warn").val()){
+			oldData["datasets"][0]["fillColor"]="rgba(255,0,0,0.1)";
+			oldData["datasets"][0]["strokeColor"]="rgba(255,0,0,1)";
+			$("#counter").css({ 'color': 'rgba(255,0,0,1)'});
+		}else{
+			oldData["datasets"][0]["fillColor"]="rgba(51,204,51,0.1)";
+			oldData["datasets"][0]["strokeColor"]="rgba(51,204,51,1)";
+			$("#counter").css({ 'color': 'rgba(255,255,255,1)'});
+		}
+		
 		
 		labels.shift();
 		labels.push("");
 		//var newDataA = dataSetA[9]+ (20 - Math.floor(Math.random() * (41)));
 		
-		dataSetA.push(read());
+		dataSetA.push(pushdata);
 		//dataSetB.push(read()-1);
 		
 		
@@ -59,7 +78,7 @@ $(document).ready(function() {
 	setInterval(function() {
 		updateData(data);
 		myNewChart.Line(data, option);
-	}, 500);
+	}, 1000);
 
 });
 
@@ -107,6 +126,7 @@ function formatDate(date, format) {
 }
 
 var finish;
+var used,usedp;
 function read() {	
 	$.ajax({
 		url : "data.json",
@@ -114,25 +134,32 @@ function read() {
 		dataType : 'json',
 		async : false,
 		success : function(d) {
-			s = d.num;
-			$("#values").html(d.num);
-			if(d.stat=="true"){				
+			s = d.n;
+			used=((d.u/1024)/1024).toFixed(2);
+			usedp=((used/1024)*100).toFixed(2);
+			$("#values").html(d.n);
+			$("#f1").html(used+"MB/1024MB");
+			$("#f2").html(usedp+"%");
+			$("#f3").css( "width", usedp+"%" );
+			$("#alertLine").html($("#warn").val());
+			if(d.s=="true"){				
 				$("#status").html("<a href='all_data.json' download>儲存裝置已自動儲存</a>");
 				if(!finish)
 				startDownload();
 			}
-			if(d.stat=="false"){
+			if(d.s=="false"){
 				finish=false;
-				$("#status").html("儲存裝置尚未連結");
+				//$("#status").html("儲存裝置尚未連結");
+				$("#status").html("");
 			}
-			if(d.stat=="max"){
+			/*if(d.stat=="max"){
 				finish=false;
-				$("#status").html("<font color='red'>10000小時未儲存</font>");
-			}
+				$("#status").html("<font color='red'>1000小時未儲存</font>");
+			}*/
 		},
 		//error : function() {}
 	});
-	s = pow(s);
+	s = pow(s);	
 	getDate();
 	return s;
 }
@@ -147,10 +174,12 @@ function pow(n) {
 	// n=Math.Round(100.1,1)
 	n = n.toString().slice(0, -2);
 	n += "00";
-	$("#realer").html(n);
+	$("#realer").html((n/1000).toFixed(1)+"mV");
 	//$(".dial").knob();
 	$('.dial').val(((n-4000)/20000)*100).trigger('change');
-	
+	if (n < 4000 && n <= 8000) {
+		n = 0;
+	}
 	
 	if (n >= 4000 && n <= 8000) {
 		n = Math.pow(10, 1 + ((n - 4000) * 0.00025));
