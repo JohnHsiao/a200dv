@@ -116,7 +116,7 @@ public class Main {
 			(new Main()).connect(driver);	
 		}catch(Exception e){
 			path="C:\\workspace\\eclipse-jee-neon-1a\\a200dv\\html\\";
-			driver="COM3";
+			driver="COM4";
 			//w.mkDir(path);
 			(new Main()).connect(driver);	
 		}		
