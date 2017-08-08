@@ -17,7 +17,7 @@ var data = {
 			borderColor:["rgba(245,78,0, 0.5)",],		
 			data : [ warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn,warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn, warn ],
 			//borderDash: [10, 5],			
-			borderWidth : 6,
+			borderWidth : 3,
 	        //pointRadius: 15,
 	        //pointHoverRadius: 10,			
 		},
@@ -74,7 +74,9 @@ option = {
                 //stepSize: 1000,
                 suggestedMin: 0,
                 suggestedMax: 10000,
-            }
+                fontColor: '#ffffff',
+            },
+            
         }],
 
         xAxes: [{
@@ -152,7 +154,7 @@ function read(){
 			$("#f1").html(used+"MB/1024MB");
 			$("#f2").html(usedp+"%");
 			$("#f3").css( "width", usedp+"%" );
-			$("#alertLine").html(warn);
+			$("#alertLine").html("AL"+warn);
 			if(newData.s=="true"){				
 				$("#status").html("<a href='all_data.json' download>儲存裝置已自動儲存</a>");
 				if(!finish)

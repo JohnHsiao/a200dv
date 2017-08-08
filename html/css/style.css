@@ -27,9 +27,9 @@
 }
 #alertLine{
 	position: absolute;
-  	top: 130px;
-  	left: 48px;
-  	font-size:28px;
+  	top: 100px;
+  	left: 10px;
+  	font-size:34px;
   	font-family: 'digital';
 	
 }
