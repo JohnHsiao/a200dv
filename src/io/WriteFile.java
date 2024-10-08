@@ -24,7 +24,7 @@ public class WriteFile {
 	 * @param filename 可用相對路徑或絕對路徑
 	 * @param format   寫入檔案的編碼格式
 	 * @param append   true 將此次寫檔串在原本檔案最後面 | false 將此次寫檔蓋掉原本的文字檔內容
-	 * @return true 寫檔成功 | false 寫檔失敗
+	 * @return true 寫檔成功 | false 寫檔失敗.
 	 */
 	public boolean writeText(String text, String filename, String format, boolean append) {
 		if (text.equals("")) {
